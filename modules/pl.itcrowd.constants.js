@@ -1,2 +1,1 @@
-angular.module('pl.itcrowd.constants', [
-]);
+angular.module('pl.itcrowd.constants', []);

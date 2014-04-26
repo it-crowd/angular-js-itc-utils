@@ -1,2 +1,1 @@
-angular.module('pl.itcrowd.services', [
-]);
+angular.module('pl.itcrowd.services', []);
