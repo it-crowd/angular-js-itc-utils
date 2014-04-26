@@ -3,17 +3,18 @@
   "version": "0.0.1",
   "license": "MIT",
   "authors": [
-    "Piotr Kozlowski <piotr.kozlowski@itcrowd.pl>"
+    "Piotr Kozlowski <piotr.kozlowski@itcrowd.pl>",
+    "Bernard Labno <bernard.labno@itcrowd.pl>"
   ],
-  "description": "Set of AngularJS custom utilities",
+  "description": "Set of AngularJS utilities used b IT Crowd",
   "main": "./dist/scripts/angularjs-itc-utils.min.js",
   "dependencies": {
-    "angular": "~1.2.11",
+    "angular": "~1.2.13",
     "bootstrap": "latest",
     "jquery": "~2.1.0",
     "ladda": "~0.9.2",
     "jquery-ui": "~1.10.4",
-    "angular-http-auth": "~1.2.1",
+    "angular-http-auth": "git://github.com/it-crowd/angular-http-auth.git#1.0.0.ITC",
     "angular-ui-bootstrap": "~0.10.0",
     "angular-ui-sortable": "~0.12.1",
     "angular-ui-slider": "~0.0.1",
