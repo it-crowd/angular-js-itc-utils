@@ -45,5 +45,5 @@
         };
     }
 
-    angular.module('restbase.services').factory('MessageFactory', MessageFactory);
+    angular.module('pl.itcrowd.services').factory('MessageFactory', MessageFactory);
 })();

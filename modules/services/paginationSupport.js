@@ -77,5 +77,5 @@
         }];
     }
 
-    angular.module('restbase.services').provider('paginationSupport', paginationSupport);
+    angular.module('pl.itcrowd.services').provider('paginationSupport', paginationSupport);
 })();

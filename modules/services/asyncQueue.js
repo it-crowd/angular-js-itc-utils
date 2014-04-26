@@ -73,6 +73,5 @@
         };
     }
 
-    //noinspection JSValidateTypes
-    angular.module('restbase.services').factory('AsyncQueue', ['$log', '$timeout', AsyncQueue]);
+    angular.module('pl.itcrowd.services').factory('AsyncQueue', ['$log', '$timeout', AsyncQueue]);
 })();
