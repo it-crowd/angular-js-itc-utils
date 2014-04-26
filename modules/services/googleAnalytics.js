@@ -11,7 +11,7 @@
             },
             sendPageview: function (location, page, title)
             {
-                $rootScope.$broadcast('GoogleAnalytics:event', location, page, title);
+                $rootScope.$broadcast('GoogleAnalytics:pageview', location, page, title);
             },
             ecommerce: function (id, affiliation, revenue, shipping, tax)
             {
@@ -37,5 +37,5 @@
         };
     }
 
-    angular.module('pl.itcrowd.services').factory('GoogleAnalytics', ['$rootScope', GoogleAnalytics]);
+    angular.module('restbase.services').factory('GoogleAnalytics', ['$rootScope', GoogleAnalytics]);
 })();

@@ -21,22 +21,21 @@
                 $scope.filter = $scope.filter || {};
                 $scope.filter = angular.extend({firstResult: 0, maxResults: defaultConfig.maxResults}, $scope.filter);
 
-                var doRefresh = angular.bind(null, refreshFunction, function (resultCount)
+                var doRefreshDueToPagination = angular.bind(null, refreshFunction, function (resultCount)
                 {
                     $scope.resultCount = resultCount;
-                });
-
-                function refresh()
+                }, false);
+                var doRefreshDueToFiltersChange = angular.bind(null, refreshFunction, function (resultCount)
                 {
-                    AsyncQueue.add(doRefresh, asyncQueueOptions);
-                }
+                    $scope.resultCount = resultCount;
+                }, true);
 
                 function modelListener(newValue, oldValue)
                 {
                     if (newValue === oldValue) {
                         return;
                     }
-                    refresh();
+                    AsyncQueue.add(doRefreshDueToPagination, asyncQueueOptions);
                 }
 
                 function pageAwareModelListener(newValue, oldValue)
@@ -45,7 +44,10 @@
                         return;
                     }
                     $scope.currentPage = 1;
-                    modelListener(newValue, oldValue);
+                    if (newValue === oldValue) {
+                        return;
+                    }
+                    AsyncQueue.add(doRefreshDueToFiltersChange, asyncQueueOptions);
                 }
 
                 for (var key in $scope.filter) {
@@ -68,12 +70,12 @@
                     $scope.filter.firstResult = (newValue - 1) * $scope.filter.maxResults;
                 }, true);
 
-                return refresh;
+                return doRefreshDueToFiltersChange;
             }
 
             return AbstractPagination;
         }];
     }
 
-    angular.module('pl.itcrowd.services').provider('paginationSupport', paginationSupport);
+    angular.module('restbase.services').provider('paginationSupport', paginationSupport);
 })();

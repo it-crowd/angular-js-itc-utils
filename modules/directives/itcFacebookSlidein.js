@@ -51,6 +51,5 @@
         };
     }
 
-    //noinspection JSValidateTypes
     angular.module('pl.itcrowd.directives').directive('itcFacebookSlidein', ['$window', itcFacebookSlidein]);
 })();

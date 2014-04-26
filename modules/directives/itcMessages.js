@@ -41,12 +41,10 @@
                     MessageFactory.clean();
                 });
 
-                //noinspection JSUnresolvedVariable
                 MessageFactory.subscribe(show, attr.itcMessages);
             }
         };
     }
 
-    //noinspection JSValidateTypes
     angular.module('pl.itcrowd.directives').directive('itcMessages', ['$compile', '$timeout', 'MessageFactory', itcMessages]);
 })();

@@ -79,30 +79,44 @@
                 };
                 var findErrors = function (field, fieldName)
                 {
-                    var error = {};
                     var input = angular.element(element.context[fieldName]);
+                    var popover = getPopover(input);
+                    var tooltip;
+
+                    function whenTypeUndefinedInvalidAndDirty()
+                    {
+                        var error = getFirstError(field);
+                        if (angular.isUndefined(popover)) {
+                            createPopover(input, error.key);
+                            showPopover(input);
+                        } else {
+                            tooltip = popover.$tip;
+                            if (!angular.isUndefined(tooltip)) {
+                                replacePopoverMessage(popover, getMessageContent(input, error.key));
+                                tooltip.addClass('error');
+                                showPopover(input);
+                            }
+                        }
+                    }
+
+                    function whenTypeDefinedInvalidAndDirty()
+                    {
+                        var error = getFirstError(field);
+                        if (block.length === 0) {
+                            createBlock(input, error.key);
+                        } else {
+                            replaceBlockMessage(block, getMessageContent(input, error.key));
+                            showBlock(block);
+                        }
+                    }
+
                     if (angular.isUndefined(type)) {
-                        var popover = getPopover(input);
-                        var tooltip;
                         if (field.$valid && !angular.isUndefined(popover)) {
                             hidePopover(input);
                             tooltip = popover.$tip;
                             tooltip.removeClass('error');
                         } else if (field.$invalid && field.$dirty) {
-                            error = getFirstError(field);
-                            if (angular.isUndefined(popover)) {
-                                createPopover(input, error.key);
-                                showPopover(input);
-                            } else {
-                                tooltip = popover.$tip;
-                                if (!angular.isUndefined(tooltip)) {
-                                    replacePopoverMessage(popover, getMessageContent(input, error.key));
-                                    if (!tooltip.hasClass('error')) {
-                                        tooltip.addClass('error');
-                                    }
-                                    showPopover(input);
-                                }
-                            }
+                            whenTypeUndefinedInvalidAndDirty();
                         }
                     } else {
                         var block;
@@ -114,13 +128,7 @@
                         if (field.$valid && block.length !== 0) {
                             hideBlock(block);
                         } else if (field.$invalid && field.$dirty) {
-                            error = getFirstError(field);
-                            if (block.length === 0) {
-                                createBlock(input, error.key);
-                            } else {
-                                replaceBlockMessage(block, getMessageContent(input, error.key));
-                                showBlock(block);
-                            }
+                            whenTypeDefinedInvalidAndDirty();
                         }
                     }
 
@@ -144,7 +152,7 @@
                 var createPopover = function (input, key)
                 {
                     input.popover({
-                        placement: 'right',
+                        placement: input.attr('popover-placement') || attributes.popoverPlacement || 'right',
                         trigger: 'manual',
                         content: getMessageContent(input, key),
                         template: '<div class="popover error"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'
@@ -158,7 +166,9 @@
 
                 var showPopover = function (input)
                 {
-                    input.popover('show');
+                    if (input.is(':visible')) {
+                        input.popover('show');
+                    }
                 };
 
                 var hidePopover = function (input)

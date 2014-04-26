@@ -11,7 +11,7 @@
                 var PRISTINE_CLASS = 'ng-pristine', DIRTY_CLASS = 'ng-dirty';
 
                 if (!attributes.name) {
-                    throw "Directive must be set on an element that has a 'name' attribute";
+                    throw new Error('Directive must be set on an element that has a "name" attribute');
                 }
 
                 // Add novalidate to the form element if not exist.
@@ -49,18 +49,17 @@
                             // Focus on the first field that is invalid
                             element.find('.ng-invalid').first().focus();
                         }
-                        scope.$emit("formValidationErrors", formName);
+                        scope.$emit('formValidationErrors', formName);
 
                     } else {
+                        form.$setPristine();
                         scope.$apply(attributes.itcSubmit);
                     }
 
                 });
             }
-        }
+        };
     }
 
     angular.module('pl.itcrowd.directives').directive('itcSubmit', itcSubmit);
 })();
-
-

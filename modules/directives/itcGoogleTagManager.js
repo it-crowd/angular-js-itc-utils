@@ -60,12 +60,12 @@
                     //noinspection JSUnresolvedVariable
                     $window.dataLayer.push(analyticsEvent);
                 });
-                $rootScope.$on('GoogleAnalytics:event', function (category, action, label, value)
+                $rootScope.$on('GoogleAnalytics:event', function (event, category, action, label, value)
                 {
                     //noinspection JSUnresolvedVariable
                     $window.dataLayer.push({event: 'event', category: category, action: action, label: label, value: value});
                 });
-                $rootScope.$on('GoogleAnalytics:pageview', function (location, page, title)
+                $rootScope.$on('GoogleAnalytics:pageview', function (event, location, page, title)
                 {
                     //noinspection JSUnresolvedVariable
                     $window.dataLayer.push({event: 'pageview', location: location, page: page, title: title});
@@ -82,6 +82,5 @@
         };
     }
 
-    //noinspection JSValidateTypes
     angular.module('pl.itcrowd.directives').directive('itcGoogleTagManager', ['$location', '$rootScope', '$window', itcGoogleTagManager]);
 })();

@@ -73,5 +73,6 @@
         };
     }
 
-    angular.module('pl.itcrowd.services').factory('AsyncQueue', ['$log', '$timeout', AsyncQueue]);
+    //noinspection JSValidateTypes
+    angular.module('restbase.services').factory('AsyncQueue', ['$log', '$timeout', AsyncQueue]);
 })();

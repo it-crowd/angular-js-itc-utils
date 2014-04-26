@@ -5,9 +5,9 @@
     /**
      * ExceptionHandler must be loaded after http-auth-interceptor i.e.:
      *
-     * angular.module('angularApp', ['http-auth-interceptor','pl.itcrowd.services']);
+     * angular.module('restbase', ['http-auth-interceptor','restbase.services']);
      */
-    angular.module('pl.itcrowd.services').config(function ($httpProvider)
+    angular.module('restbase.services').config(function ($httpProvider)
     {
         function interceptor($location, $rootScope, $q)
         {

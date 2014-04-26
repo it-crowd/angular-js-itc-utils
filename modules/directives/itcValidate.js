@@ -54,6 +54,8 @@
         };
     }
 
-    angular.module('pl.itcrowd.directives').directive('itcEquals', itcEquals);
-    angular.module('pl.itcrowd.directives').directive('itcLessThan', itcLessThan);
+    var module = angular.module('pl.itcrowd.directives');
+
+    module.directive('itcEquals', itcEquals);
+    module.directive('itcLessThan', itcLessThan);
 })();

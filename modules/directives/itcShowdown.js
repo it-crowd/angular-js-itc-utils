@@ -28,6 +28,5 @@
         };
     }
 
-    //noinspection JSValidateTypes
     angular.module('pl.itcrowd.directives').directive('itcShowdown', ['$showdown', itcShowdown]);
 })();
