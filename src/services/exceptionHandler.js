@@ -2,12 +2,7 @@
 {
     'use strict';
 
-    /**
-     * ExceptionHandler must be loaded after http-auth-interceptor i.e.:
-     *
-     * angular.module('restbase', ['http-auth-interceptor','pl.itcrowd.services']);
-     */
-    angular.module('pl.itcrowd.services').config(function ($httpProvider)
+    function config($httpProvider)
     {
         function interceptor($location, $rootScope, $q)
         {
@@ -72,5 +67,12 @@
         }
 
         $httpProvider.responseInterceptors.push(['$location', '$rootScope', '$q', interceptor]);
-    });
+    }
+
+    /**
+     * ExceptionHandler must be loaded after http-auth-interceptor i.e.:
+     *
+     * angular.module('restbase', ['http-auth-interceptor','pl.itcrowd.services']);
+     */
+    angular.module('pl.itcrowd.services').config(['$httpProvider', config]);
 })();

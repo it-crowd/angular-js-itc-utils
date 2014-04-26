@@ -1,27 +1,11 @@
-/*global process*/
 module.exports = function (config)
 {
     'use strict';
 
-    var coverageReporter;
-    //noinspection JSUnresolvedVariable
-    if (process.env.JENKINS_URL) {
-        coverageReporter = {
-            dir: '../target/',
-            type: 'cobertura',
-            file: 'coverage.xml'
-        };
-    } else {
-        coverageReporter = {
-            dir: '../target/coverage/',
-            type: 'html'
-        };
-    }
-
     config.set({
 
         // base path, that will be used to resolve files and exclude
-        basePath: '.',
+        basePath: '',
 
 
         // frameworks to use
@@ -36,7 +20,7 @@ module.exports = function (config)
             '../bower_components/angular-mocks/angular-mocks.js',
             '../bower_components/angular-route/angular-route.js',
             '../bower_components/showdown/compressed/showdown.js',
-            '../src/**/*.js',
+            '../dist/angular-itc-utils.min.js',
             'unit/**/*.js'
         ],
 
@@ -48,17 +32,7 @@ module.exports = function (config)
 
         // test results reporter to use
         // possible values: 'dots', 'progress', 'junit', 'growl', 'coverage'
-        reporters: ['spec', 'junit', 'coverage'],
-
-        preprocessors: {
-            '../src/**/*.js': 'coverage'
-        },
-
-        coverageReporter: coverageReporter,
-
-        junitReporter: {
-            outputFile: '../target/test-results.xml'
-        },
+        reporters: ['spec'],
 
         // web server port
         port: 9876,

@@ -4,7 +4,7 @@
 
     /* Start angularLocalStorage */
 
-    var angularLocalStorage = angular.module('pl.itcrowd.services', []);
+    var angularLocalStorage = angular.module('pl.itcrowd.services');
 
 // You should set a prefix to avoid overwriting any local storage variables from the rest of your app
 // e.g. angularLocalStorage.constant('prefix', 'youAppName');
