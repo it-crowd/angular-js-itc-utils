@@ -1,10 +1,13 @@
 {
     "name": "angular-js-itc-utils",
     "version": "0.0.1",
-    "author": "Piotr Kozlowski <piotr.kozlowski@itcrowd.pl>",
+    "author": "Bernard Labno <bernard.labno@itcrowd.pl>",
     "description": "Set of AngularJS custom utilities",
     "contributors": [
-        {}
+        {
+            "name": "Piotr Kozlowski",
+            "email": "piotr.kozlowski@itcrowd.pl"
+        }
     ],
     "dependencies": {},
     "devDependencies": {
