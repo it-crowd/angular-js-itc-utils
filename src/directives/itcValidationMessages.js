@@ -14,8 +14,10 @@
                     throw new Error('Directive must be set on an element that has a "name" attribute');
                 }
 
+                //noinspection JSUnresolvedVariable
                 var event = attributes.itcValidationMessagesEvent;
 
+                //noinspection JSUnresolvedVariable
                 var type = attributes.itcValidationMessagesType;
 
                 // Get the form object.
@@ -36,33 +38,50 @@
                         checkFieldsValidity();
                     }
                 });
-
-                angular.forEach(form, function (field, fieldName)
+                function bindControlListeners()
                 {
-                    // If the field name starts with a '$' sign, it means it's an Angular property or function and we should skip those items.
-                    if (fieldName[0] === '$') {
-                        return;
-                    }
-                    var input = angular.element(element.context[fieldName]);
-                    if (angular.isUndefined(event)) {
-                        input.bind('blur', function ()
-                        {
-                            findErrors(field, fieldName);
-                        });
-                    } else {
-                        scope.$watch(function ()
-                        {
-                            // Watching the class attribute to capture validations errors
-                            return input.attr('class');
-                        }, function ()
-                        {
-                            scope.$emit('fieldValidationError', {
-                                formName: formName,
-                                field: field,
-                                fieldName: fieldName
+                    angular.forEach(form, function (field, fieldName)
+                    {
+                        // If the field name starts with a '$' sign, it means it's an Angular property or function and we should skip those items.
+                        if (fieldName[0] === '$' || field.$itcVMRegistered) {
+                            return;
+                        }
+                        field.$itcVMRegistered = true;
+                        var input = angular.element(element.context[fieldName]);
+                        var elMatch = fieldName.match(/{{([^}]*)}}/);
+                        var evaluatedFieldName = elMatch ? scope.$eval(elMatch[1]) : fieldName;
+                        field.$label =
+                                input.closest('form').find('label[for=' + evaluatedFieldName + ']').text() || input.attr('placeholder') || evaluatedFieldName;
+                        if (angular.isUndefined(event)) {
+                            input.bind('blur', function ()
+                            {
+                                findErrors(field, fieldName);
                             });
-                        });
-                    }
+                        } else {
+                            scope.$watch(function ()
+                            {
+                                // Watching the class attribute to capture validations errors
+                                return input.attr('class');
+                            }, function ()
+                            {
+                                scope.$emit('fieldValidationError', {
+                                    formName: formName,
+                                    field: field,
+                                    fieldName: fieldName
+                                });
+                            });
+                        }
+                    });
+                }
+
+                bindControlListeners();
+
+                /**
+                 * If controles are nested in tabset then they are added to from later and we need to wach for that situation.
+                 */
+                scope.$watchCollection(formName, function ()
+                {
+                    bindControlListeners();
                 });
 
                 var checkFieldsValidity = function ()
