@@ -38,6 +38,13 @@
                         checkFieldsValidity();
                     }
                 });
+
+                element.bind("keydown keypress", function(event) {
+                    if(event.which === 13) {
+                        checkFieldsValidity();
+                    }
+                });
+
                 function bindControlListeners()
                 {
                     angular.forEach(form, function (field, fieldName)
