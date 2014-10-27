@@ -10,16 +10,21 @@
                 name: '@',
                 content: '@'
             },
-            link: function (scope)
+            link: function (scope,elem,attrs)
             {
-                scope.$watch('content', function ()
+                scope.$watch('content', function (newValue, oldValue)
                 {
-                    var meta = jQuery('meta[name=' + scope.name + ']');
-                    if (0 === meta.size()) {
-                        meta = jQuery('<meta name="' + scope.name + '">');
-                        jQuery('head').append(meta);
+                    if(''===oldValue && oldValue===newValue){
+                        return;
                     }
-                    meta.attr('content', scope.content);
+                    var meta = jQuery('<meta>');
+                    angular.forEach(attrs, function (value, key)
+                    {
+                        if(!(value instanceof Object)){
+                            meta = meta.attr(key,value);
+                        }
+                    });
+                    jQuery('head').append(meta);
                 });
 
             }

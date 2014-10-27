@@ -25,28 +25,17 @@
                 {
                     $scope.resultCount = resultCount;
                 }, false);
-
                 var doRefreshDueToFiltersChange = angular.bind(null, refreshFunction, function (resultCount)
                 {
                     $scope.resultCount = resultCount;
                 }, true);
-
-                function refreshDueToPagination()
-                {
-                    AsyncQueue.add(doRefreshDueToPagination, asyncQueueOptions);
-                }
-
-                function refreshDueToFiltersChange()
-                {
-                    AsyncQueue.add(doRefreshDueToFiltersChange, asyncQueueOptions);
-                }
 
                 function modelListener(newValue, oldValue)
                 {
                     if (newValue === oldValue) {
                         return;
                     }
-                    refreshDueToPagination();
+                    AsyncQueue.add(doRefreshDueToPagination, asyncQueueOptions);
                 }
 
                 function pageAwareModelListener(newValue, oldValue)
@@ -58,14 +47,15 @@
                     if (newValue === oldValue) {
                         return;
                     }
-                    refreshDueToFiltersChange();
+                    AsyncQueue.add(doRefreshDueToFiltersChange, asyncQueueOptions);
                 }
 
-                angular.forEach($scope.filter, function (value, key)
-                {
-                    var listener = 'firstResult' === key || 'maxResults' === key ? modelListener : pageAwareModelListener;
-                    $scope.$watch('filter.' + key, listener, true);
-                });
+                for (var key in $scope.filter) {
+                    if ($scope.filter.hasOwnProperty(key)) {
+                        var listener = 'firstResult' === key || 'maxResults' === key ? modelListener : pageAwareModelListener;
+                        $scope.$watch('filter.' + key, listener, true);
+                    }
+                }
 
                 $scope.isPaginationNeeded = function ()
                 {
@@ -80,7 +70,7 @@
                     $scope.filter.firstResult = (newValue - 1) * $scope.filter.maxResults;
                 }, true);
 
-                return refreshDueToFiltersChange;
+                return angular.bind(AsyncQueue, AsyncQueue.add, doRefreshDueToFiltersChange, asyncQueueOptions);
             }
 
             return AbstractPagination;

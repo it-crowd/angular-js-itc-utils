@@ -28,7 +28,7 @@
                     if ($scope.stayTime) {
                         $timeout(function ()
                         {
-                            messageElement.fadeOut(400, function ()
+                            messageElement.fadeOut(1000, function ()
                             {
                                 messageElement.remove();
                             });
@@ -41,6 +41,7 @@
                     MessageFactory.clean();
                 });
 
+                //noinspection JSUnresolvedVariable
                 MessageFactory.subscribe(show, attr.itcMessages);
             }
         };

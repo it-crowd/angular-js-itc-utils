@@ -15,6 +15,7 @@
                 }
 
                 // Add novalidate to the form element if not exist.
+                //noinspection JSUnresolvedVariable
                 if (angular.isUndefined(attributes.novalidate)) {
                     attributes.$set('novalidate', '');
                 }
@@ -45,6 +46,7 @@
                     // Do not continue if the form is invalid.
                     if (form.$invalid) {
                         scope.$apply();
+                        //noinspection JSUnresolvedVariable
                         if (angular.isUndefined(attributes.itcSubmitWithoutFocus)) {
                             // Focus on the first field that is invalid
                             element.find('.ng-invalid').first().focus();
@@ -53,6 +55,7 @@
 
                     } else {
                         form.$setPristine();
+                        //noinspection JSUnresolvedVariable
                         scope.$apply(attributes.itcSubmit);
                     }
 

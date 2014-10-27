@@ -13,11 +13,7 @@
             restrict: 'C',
             link: function (scope, elem)
             {
-                var unbindWatch = scope.$on('$translateChangeEnd', function ()
-                {
-                    elem.removeClass('itc-waiting-for-angular');
-                    unbindWatch(); //it should run only once
-                });
+                elem.removeClass('itc-waiting-for-angular');
             }
         };
     }
