@@ -22,7 +22,7 @@
         result = result.pipe(uglify());
         result.pipe(gulp.dest('dist'));
 
-        result = gulp.src(['src/**/*.js', 'bower.json']);
+        result = gulp.src(['bower.json']);
         result.pipe(gulp.dest('dist'));
     }
 
